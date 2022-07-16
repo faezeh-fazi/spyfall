@@ -1,42 +1,52 @@
-body {
-    background-image: url("../assets/spy.png") ;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    display: flex
-  }
-
-  @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
 }
 
 
+body {
+  font-family: 'CRAMPS', sans-serif;
+      background-image: url("../assets/bgpic.jpg") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
 
+  }
+
+  @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+
+  
+                                                
+
+.content-area {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 150px auto;
+}
 .content {
-  position: relative;
+  text-align: center;
 }
 
 .content h2 {
+  font-family: "Poppins", sans-serif;
+
   color: #fff;
-  font-size: 9em;
+  font-size: 8em;
   position: absolute;
   transform: translate(-50%, -50%);
 }
 
 .content h2:nth-child(1) {
   color: transparent;
-  -webkit-text-stroke: 2px #a10000;
+  -webkit-text-stroke: 2px #b1b1b1;
 }
 
 .content h2:nth-child(2) {
-  color: #a10000;
+  color: #646d8a;
   animation: animate 4s ease-in-out infinite;
 }
 
@@ -69,4 +79,28 @@ body {
       0% 100%
     );
   }
+}
+
+.start-game-btn-area {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
+
+}
+
+.start-btn{
+  font-size: 45px;
+  font-family: 'CRAMPS', sans-serif;
+  cursor: pointer;
+  color: #646d8a;
+  background-color:black;
+}
+
+.start-btn:hover{
+
+  color: #fff;
 }
