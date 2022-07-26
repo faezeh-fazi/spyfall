@@ -82,6 +82,15 @@ body {
   flex-wrap: nowrap;
   gap: 20px;
 }
+.setting-select {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
 
 .start-btn {
   font-size: 45px;
@@ -127,4 +136,11 @@ body {
   background-image: url("../assets/bgpic.jpg");
   background-size: "cover";
   background-repeat: "no-repeat";
+}
+
+.form-select {
+  width: 150px;
+  background-color: #646d8a;
+  color: #fff;
+  border: #646d8a;
 }

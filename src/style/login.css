@@ -1,0 +1,46 @@
+
+body{
+    height: 100%;
+}
+.login {
+    display: flex;
+    font-family: cursive;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-btn {
+    width: 100%;
+}
+.login-cont {
+    margin: auto;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+input {
+    border-radius: 10px;
+    height: 35px;
+    width: 300px;
+}
+ .login-btn{
+    background-color: #646d8a;
+    color: #fff;
+    font-size: 20px;
+}
+.navbar{
+    background-color: #646d8a;
+}
+.navbar-brand {
+    color: #fff;
+}
+.navbar-toggler{
+    color: #fff;
+}
+.nav-link {
+    color: #fff;
+}

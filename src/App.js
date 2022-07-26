@@ -1,4 +1,5 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import Navbar from "./phone/Navbar";
 import Login from "./phone/Login";
@@ -10,7 +11,6 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Navbar />
           <Route path="/" element={<Intro />} />
 
           <Route path="/room" element={<NewRoom />} />
