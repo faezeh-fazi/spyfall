@@ -1,0 +1,60 @@
+/* .bg-home {
+    background-image: url("../assets/Round.jpg");
+    background-size: "cover";
+    background-repeat: "no-repeat";
+  } */
+  /* .full-screen {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-size: "cover";
+    background-repeat: "no-repeat";
+  } */
+  
+  .scene {
+    width: 200px;
+    height: 260px;
+    margin: 150px auto;
+    perspective: 600px;
+  }
+  
+  .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform-origin: center right;
+    transition: transform 1s;
+    border-radius: 5%;
+
+  }
+  
+  .card.is-flipped {
+    transform: translateX(-100%) rotateY(-180deg);
+  }
+  
+  .card_face {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    backface-visibility: hidden;
+    border-radius: 5%;
+
+  }
+  
+  .card_face--front {
+    background: #3b413f;
+  }
+  
+  .card_face--back {
+    background: #080808;
+    transform: rotateY(180deg);
+  }
+  

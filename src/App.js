@@ -5,6 +5,7 @@ import Navbar from "./phone/Navbar";
 import Login from "./phone/Login";
 import Intro from "./screen/Intro";
 import NewRoom from "./screen/NewRoom";
+import FirstRound from "./phone/FirstRound";
 
 function App() {
   return (
@@ -12,9 +13,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Intro />} />
-
           <Route path="/room" element={<NewRoom />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/startpage" element={<FirstRound />} />
         </Routes>
       </div>
     </BrowserRouter>
