@@ -6,6 +6,7 @@ import Login from "./phone/Login";
 import Intro from "./screen/Intro";
 import NewRoom from "./screen/NewRoom";
 import FirstRound from "./phone/FirstRound";
+import CharacterList from "./phone/CharacterList";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/room" element={<NewRoom />} />
           <Route path="/login" element={<Login />} />
           <Route path="/startpage" element={<FirstRound />} />
+          <Route path="/characterlist" element={<CharacterList />} />
         </Routes>
       </div>
     </BrowserRouter>

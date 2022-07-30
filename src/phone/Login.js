@@ -12,7 +12,7 @@ const navigate= useNavigate();
 
   const onSubmit = (data) => {
     console.log(data)
-    navigate('/startpage')
+    navigate('/characterlist')
     
   }
 

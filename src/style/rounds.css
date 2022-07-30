@@ -3,58 +3,94 @@
     background-size: "cover";
     background-repeat: "no-repeat";
   } */
-  /* .full-screen {
+/* .full-screen {
     position: absolute;
     width: 100%;
     height: 100vh;
     background-size: "cover";
     background-repeat: "no-repeat";
   } */
-  
-  .scene {
-    width: 200px;
-    height: 260px;
-    margin: 150px auto;
-    perspective: 600px;
-  }
-  
-  .card {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transform-origin: center right;
-    transition: transform 1s;
-    border-radius: 5%;
 
-  }
-  
-  .card.is-flipped {
-    transform: translateX(-100%) rotateY(-180deg);
-  }
-  
-  .card_face {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    color: white;
-    text-align: center;
-    font-size: 14px;
-    backface-visibility: hidden;
-    border-radius: 5%;
+/* Avatars List */
 
-  }
-  
-  .card_face--front {
-    background: #3b413f;
-  }
-  
-  .card_face--back {
-    background: #080808;
-    transform: rotateY(180deg);
-  }
-  
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 120px;
+}
+.avatar-container h5,
+h7 {
+  color: #fff;
+}
+.avatar-images {
+  margin: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 15px;
+}
+.avatar-images img {
+  width: 70px;
+  height: 70px;
+}
+.vip-start-btn {
+  font-size: 20px;
+  font-family: "CRAMPS", sans-serif;
+  cursor: pointer;
+  color: #fff;
+  background-color: black;
+  width: 15rem;
+  border-radius: 20px;
+}
+.vip-start-btn:hover {
+  color: #646d8a;
+}
+.scene {
+  width: 200px;
+  height: 260px;
+  margin: 150px auto;
+  perspective: 600px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center right;
+  transition: transform 1s;
+  border-radius: 5%;
+}
+
+.card.is-flipped {
+  transform: translateX(-100%) rotateY(-180deg);
+}
+
+.card_face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  backface-visibility: hidden;
+  border-radius: 5%;
+}
+
+.card_face--front {
+  background: #3b413f;
+}
+
+.card_face--back {
+  background: #080808;
+  transform: rotateY(180deg);
+}

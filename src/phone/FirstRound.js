@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../style/rounds.css";
 import bank from "../assets/bank.jpg"
 
+
 const FirstRound = () => {
   const [flip, setFlip] = useState(false);
   const [isSpy, setIsSpy] = useState(false);
@@ -26,10 +27,10 @@ const FirstRound = () => {
         {/* <img src={bank} alt="bank"  style={{width: "100%"}}/> */}
 
         </div>
-
   </div>
 </div>
 </div>
+
     </>
   );
 };
