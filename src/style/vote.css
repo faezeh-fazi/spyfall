@@ -1,0 +1,46 @@
+.vote-section{
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.vote-section h5 {
+    color: white;
+padding-bottom: 20px;
+}
+
+.vote-btn{
+    font-size: 16px;
+    font-family: "CRAMPS", sans-serif;
+    cursor: pointer;
+    color: #fff;
+    background-color: rgb(95, 95, 95);
+    width: 220px;
+    height: 50px;
+    border-radius: 20px;
+    align-items: center;
+}
+
+.places-list {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    height: 100vh;
+    margin-bottom: 100px;
+
+}
+.places-list h3 {
+   color: #fff;
+}
+.location-btn{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 250px;
+    height: 30px;
+    border-radius: 20px;
+}

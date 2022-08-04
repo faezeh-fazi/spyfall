@@ -8,6 +8,9 @@ import NewRoom from "./screen/NewRoom";
 import FirstRound from "./phone/FirstRound";
 import CharacterList from "./phone/CharacterList";
 import GameRoom from "./phone/GameRoom";
+import Vote from "./phone/Vote";
+import GuessLocation from "./phone/GuessLocation";
+import ScreenVote from "./screen/ScreenVote";
 
 function App() {
   return (
@@ -16,10 +19,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Intro />} />
           <Route path="/room" element={<NewRoom />} />
+          <Route path="/screen-vote" element={<ScreenVote />} />
           <Route path="/login" element={<Login />} />
           <Route path="/startpage" element={<FirstRound />} />
           <Route path="/game" element={<GameRoom />} />
           <Route path="/characterlist" element={<CharacterList />} />
+          <Route path="/vote" element={<Vote />} />
+          <Route path="/spy-guess" element={<GuessLocation />} />
         </Routes>
       </div>
     </BrowserRouter>

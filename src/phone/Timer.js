@@ -6,18 +6,18 @@ const STATUS = {
   STOPPED: "Stopped",
 };
 
-const InitialCount = 300;
 
-export default function Timer({ prop }) {
+
+export default function Timer({InitialCount}) {
   const [secondsRemaining, setSecondsRemaining] = useState(InitialCount);
-  const [status, setStatus] = useState(STATUS.STOPPED);
+  const [status, setStatus] = useState(STATUS.STARTED);
 
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
 
   const handleStart = () => {
-    setStatus(prop);
+    setStatus(STATUS.STARTED);
   };
   const handleStop = () => {
     setStatus(STATUS.STOPPED);
@@ -35,36 +35,30 @@ export default function Timer({ prop }) {
       }
     },
     status === STATUS.STARTED ? 1000 : null
-    // passing null stops the interval
   );
+
   return (
-    <div className="App">
-      <button onClick={handleStart} type="button">
-        Start
-      </button>
-      {/* <button onClick={handleStop} type="button">
-        Stop
-      </button>
-      <button onClick={handleReset} type="button">
-        Reset
-      </button> */}
+    <>
       <div style={{ padding: 20 }}>
-        {twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}
+        {!(twoDigits(minutesToDisplay) && twoDigits(secondsToDisplay) == "00" )? (
+
+           <>{twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}</>
+          
+        ) : 
+        <h1 style={{fontSize: "55px", fontWeight:"bold"}}>Time is up</h1>
+        }
       </div>
-      {/* <div>Status: {status}</div> */}
-    </div>
+    </>
   );
 }
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
-  // Remember the latest callback.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
-  // Set up the interval.
   useEffect(() => {
     function tick() {
       savedCallback.current();
