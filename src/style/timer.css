@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Iceland&family=Special+Elite&display=swap");
+body {
+  font-family: "Iceland", cursive;
+  font-size: 72px;
+  font-weight: bold;
+  color: #b8bac1;
+}
+
+.timer-section {
+  display: flex;
+  justify-content: center;
+}
