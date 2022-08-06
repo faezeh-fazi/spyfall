@@ -27,16 +27,7 @@ body {
 background-position: center;
 
 }
-@media (min-height: 600px) {
-  body {
-    height: 100vh;
-    background-image: url("../assets/bgpic.jpg");
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
-  background-position: center;
-  }
-}
+
 
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 
@@ -110,7 +101,8 @@ background-position: center;
 }
 .setting-select {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  color: #ffffff;
   align-content: space-between;
   align-items: center;
   justify-content: center;
@@ -137,4 +129,58 @@ background-position: center;
   background-color: #646d8a;
   color: #fff;
   border: #646d8a;
+}
+
+.waviy {
+  position: relative;
+  -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
+  font-size: 16px;
+}
+.waviy {
+  font-family: 'Alfa Slab One', cursive;
+  position: relative;
+  display: inline-block;
+  color: rgb(235, 235, 235);
+  animation: waviy 1s infinite;
+  animation-delay: calc(.1s * var(--i));
+  
+}
+@keyframes waviy {
+  0%,40%,100% {
+    transform: translateY(0px)
+  }
+  60% {
+    transform: translateY(-10px)
+  }
+}
+
+@media (min-height: 600px ) and (min-width: 821px) {
+  body {
+    height: 100vh;
+    background-image: url("../assets/bgpic.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+  background-position: center;
+  }
+}
+@media (max-width: 480px) {
+  .content h2 {
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+    font-size: 5em;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 480px) {
+  .start-btn {
+    font-size: 35px;
+    font-family: "CRAMPS", sans-serif;
+    cursor: pointer;
+    color: #646d8a;
+    background-color: black;
+    width: 15rem;
+    border-radius: 20px;
+  }
 }

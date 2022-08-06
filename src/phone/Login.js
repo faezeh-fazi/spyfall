@@ -17,11 +17,13 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
+    data.roomcode.toUpperCase()
     axios.post(`${baseUrl}/room/join`, data, { headers }).then((response) => {
-      console.log(response.status);
-      console.log(response.data);
-      navigate("/room");
+      if(response.status == 200)
+      {
+        navigate("/characterlist");
+      }
+
     });
   };
 
@@ -40,7 +42,7 @@ const Login = () => {
               {...register("PlayerName", { required: true })}
             />
           </label>
-          {errors.PlayerName && <span>This field is required</span>}
+          {errors.PlayerName  && <span>This field is required</span>}
           <label>
             Room Code
             <br />

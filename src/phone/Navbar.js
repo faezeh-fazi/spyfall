@@ -5,14 +5,18 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useNavigate } from "react-router-dom";
 import "../style/login.css"
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 function NavbarComponent() {
+  let navigate = useNavigate();
+
   return (
     <>
       <Navbar expand="lg" className="mb-3">
         <Container fluid>
+        <div style={{backgroundColor: "none", color:"white"}} onClick={() => navigate(-1)}><ArrowBackIosIcon/></div>
           <Navbar.Brand >Spyfalls</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Offcanvas placement="end">

@@ -8,17 +8,19 @@ import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import RoomReq from "../context/RoomReq";
 import Intro from "./Intro";
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 
 const NewRoom = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const {headers} = RoomReq();
+  const navigate = useNavigate();
 
+  const {headers} = RoomReq();
   const [connection, setConnection] = useState(null);
   const [players, setPlayers] = useState([]);
-  const [room, setRoom] = useState({});
-  // const latestPlayers = useRef(null);
-  // latestPlayers.current = players;
+  const [room, setRoom] = useState({players:[]});
+  const latestPlayers = useRef(null);
+  latestPlayers.current = room.players;
 
   useEffect(() => {
     getRoom();
@@ -38,39 +40,42 @@ const NewRoom = () => {
       }
     }
 
-    console.log(room.players)
-
     
-  //   const token = JSON.parse(localStorage.getItem("token"));
-  // useEffect(() => {
-  //   const newConnection = new HubConnectionBuilder()
-  //     .withUrl(`${baseUrl}/roomsHub`, {
-  //       accessTokenFactory: () => token,
-  //       skipNegotiation: true,
-  //       transport: HttpTransportType.WebSockets,
-  //     })
-  //     .withAutomaticReconnect()
-  //     .build();
+    const token = JSON.parse(localStorage.getItem("token"));
+    if(token === null)
+    {
+      navigate('/');
+    }
 
-  //   setConnection(newConnection);
-  // }, []);
-  // useEffect(() => {
-  //   if (connection) {
-  //     connection
-  //       .start()
-  //       .then((result) => {
-  //         console.log("Connected!");
+    useEffect(() => {
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(`${baseUrl}/roomsHub`, {
+        accessTokenFactory: () => token,
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .build();
 
-  //         connection.on("PlayerUpdate", (message) => {
-  //           const updatedPlayers = [...latestPlayers.current];
-  //           updatedPlayers.push(message);
+    setConnection(newConnection);
+  }, []);
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then((result) => {
+          console.log("Connected!");
+          connection.on("PlayerUpdate", (message) => {
+            const updatedPlayers = [...latestPlayers.current];
+            updatedPlayers.push(message);
 
-  //           setPlayers(updatedPlayers);
-  //         });
-  //       })
-  //       .catch((e) => console.log("Connection failed: ", e));
-  //   }
-  // }, [connection]);
+            setPlayers(updatedPlayers);
+          });
+          debugger
+        })
+        .catch((e) => console.log("Connection failed: ", e));
+    }
+  }, [connection]);
 
 
   return (
