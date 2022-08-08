@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/main.css";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import RoomReq from "../context/RoomReq";
+import { RoomContext} from "../context/RoomContext";
+import CreateRoom from "../requests/ApiReq";
 
 const Intro = () => {
+  const {room, setRoom } = useContext(RoomContext)
   const { headers } = RoomReq();
+
+  const {create} = CreateRoom()
 
   const [roomData, setroomData] = useState({});
   const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -21,18 +26,31 @@ const Intro = () => {
     localStorage.clear();
 
   }, []);
-  const handleSubmit = () => {
-    try {
-      axios.post(`${baseUrl}/room`, data).then(async (response) => {
-        setroomData(response.data);
-        localStorage.setItem("token", JSON.stringify(response.data.token));
-        console.log(roomData);
-        navigate(`/room`);
-      });
-    } catch (error) {
-      console.log(error);
+  debugger
+  const handleSubmit = async () => {
+    debugger
+    try{
+      let room = await createRoom(data);
+      setRoom(room.data);
     }
-  };
+    catch(ex){
+      debugger
+    }
+    debugger
+  }
+    
+  // const handleSubmit = () => {
+  //   try {
+  //     axios.post(`${baseUrl}/room`, data).then(async (response) => {
+  //       setroomData(response.data);
+  //       localStorage.setItem("token", JSON.stringify(response.data.token));
+  //       console.log(roomData);
+  //       navigate(`/room`);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <>
       <div className="full-screen bg-home">
