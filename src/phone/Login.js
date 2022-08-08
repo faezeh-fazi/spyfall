@@ -7,7 +7,7 @@ import axios from "axios";
 import RoomReq from "../context/RoomReq";
 
 const Login = () => {
-  const {headers} = RoomReq();
+  const {getToken} = RoomReq();
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const {
     register,
@@ -18,9 +18,10 @@ const Login = () => {
 
   const onSubmit = (data) => {
     data.roomcode.toUpperCase()
-    axios.post(`${baseUrl}/room/join`, data, { headers }).then((response) => {
+    axios.post(`${baseUrl}/room/join`, data).then((response) => {
       if(response.status == 200)
       {
+        localStorage.setItem('token',JSON.stringify(response.data.token));
         navigate("/characterlist");
       }
 

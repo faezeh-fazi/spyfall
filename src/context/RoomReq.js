@@ -29,6 +29,7 @@ export default function RoomReq(){
   
 
     return {
-      headers
+      headers,
+      getToken
     }
 }

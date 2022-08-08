@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "../style/rounds.css";
 import { useNavigate } from "react-router-dom";
-import bank from "../assets/bank.jpg";
+import axios from "axios";
+import RoomReq from "../context/RoomReq";
 
 const FirstRound = () => {
   const navigate = useNavigate();
+  const { headers } = RoomReq();
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const [flip, setFlip] = useState(false);
   const [isSpy, setIsSpy] = useState(false);
   const [isVip, setIsVip] = useState(true);
@@ -13,9 +16,18 @@ const FirstRound = () => {
     setFlip(!flip);
   };
 
-  const navigateToGame = () => {
-    navigate("/game");
+
+  
+  const onSubmit = () => {
+    axios.post(`${baseUrl}/room/location/confirm`, {}, { headers }).then((response) => {
+      if (response.status == 200) {
+        console.log(response.data)
+          navigate("/game");
+      }
+    });
   };
+
+
   return (
     <>
       <div className="full-screen bg-home">
@@ -38,7 +50,7 @@ const FirstRound = () => {
           {isVip ? (
             <button
               className="vip-start-btn"
-              onClick={navigateToGame}
+              onClick={onSubmit}
               type="button"
             >
               start the game

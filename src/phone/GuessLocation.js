@@ -1,6 +1,15 @@
-import React from "react";
+import axios from "axios";
+import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
+import RoomReq from "../context/RoomReq";
 
 const GuessLocation = () => {
+  const navigate = useNavigate();
+  const { headers } = RoomReq();
+  const [search, setSearch] = useState("")
+  const [filtered, setFiltered] = useState([]);
+
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const items = [
     {
       name: "Airplane",
@@ -71,14 +80,39 @@ const GuessLocation = () => {
       id: "cemetery",
     },
   ];
-
+  useEffect(() => {
+    const result = items.filter((item) => {
+      return (
+        item.name.toLowerCase().match(search.toLowerCase())
+      );
+    });
+    setFiltered(result);
+  }, [search]);
+  const onSubmit = (location) => {
+    axios.post(`${baseUrl}/room/spy/${location}`, {}, { headers }).then((response) => {
+      if (response.status == 200) {
+        console.log(response.data)
+          navigate("/vote");
+      }
+    })
+  };
   return (
     <>
       <div className="full-screen bg-home">
+        <div className="loc" >
+        <h3>The Location is</h3>
+        <input
+                type="text"
+                placeholder="Search here"
+                className="w-90 form-control"
+                style={{  height: "35px", width:"350px" }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+        </div>
         <div className="places-list">
-          <h3>The Location is</h3>
-          {items.map((item) => (
-            <button className="location-btn" type="button">
+          {filtered.map((item) => (
+            <button className="location-btn" value={item.name} type="button" onClick={(e)=> onSubmit(e.target.value)}>
               {item.name}
             </button>
           ))}

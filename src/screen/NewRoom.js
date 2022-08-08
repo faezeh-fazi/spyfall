@@ -6,48 +6,40 @@ import character3 from "../assets/avatars/c3.png";
 import character4 from "../assets/avatars/c4.png";
 import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import RoomReq from "../context/RoomReq";
-import Intro from "./Intro";
-import axios from "axios"
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 
 const NewRoom = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
 
-  const {headers} = RoomReq();
+  const { headers } = RoomReq();
   const [connection, setConnection] = useState(null);
-  const [players, setPlayers] = useState([]);
-  const [room, setRoom] = useState({players:[]});
+  const [room, setRoom] = useState({ players: [] });
   const latestPlayers = useRef(null);
   latestPlayers.current = room.players;
 
   useEffect(() => {
     getRoom();
   }, []);
-  
+
   async function getRoom() {
     try {
-      const response = await axios.get(
-        `${baseUrl}/room/data`,
-        { headers }
-        );
+      const response = await axios.get(`${baseUrl}/room/data`, { headers });
 
-        setRoom(response.data);
-        console.log(response.data)
-      } catch (error) {
-        console.log(error)
-      }
+      setRoom(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    
-    const token = JSON.parse(localStorage.getItem("token"));
-    if(token === null)
-    {
-      navigate('/');
-    }
+  const token = JSON.parse(localStorage.getItem("token"));
+  if (token === null) {
+    navigate("/");
+  }
 
-    useEffect(() => {
+  useEffect(() => {
     const newConnection = new HubConnectionBuilder()
       .withUrl(`${baseUrl}/roomsHub`, {
         accessTokenFactory: () => token,
@@ -61,22 +53,26 @@ const NewRoom = () => {
   }, []);
   useEffect(() => {
     if (connection) {
+      connection.on("PlayerUpdate", (message) => {
+        const updatedPlayers = [...room.players];
+        updatedPlayers.push(message);
+        debugger
+        setRoom((prevState) => {
+          return { ...prevState, players: updatedPlayers };
+        });
+      });
+
       connection
         .start()
-        .then((result) => {
+        .then(() => {
           console.log("Connected!");
-          connection.on("PlayerUpdate", (message) => {
-            const updatedPlayers = [...latestPlayers.current];
-            updatedPlayers.push(message);
-
-            setPlayers(updatedPlayers);
-          });
-          debugger
+          
+          connection.invoke('AssignToGroup', room.code);
+        
         })
         .catch((e) => console.log("Connection failed: ", e));
     }
   }, [connection]);
-
 
   return (
     <>
@@ -87,12 +83,12 @@ const NewRoom = () => {
         </div>
 
         <section className="avatars">
-          {room.players.map(player =>
-          <div className="memebers">
-            <img src={character1} alt="avatar" />
-            <h3>{player.playerName}</h3>
-          </div>
-          )}
+          {room.players.map((player) => (
+            <div className="memebers" key={player.playerId}>
+              <img src={character1} alt="avatar" />
+              <h3>{player.playerName}</h3>
+            </div>
+          ))}
           {/* <div className="memebers">
             <img src={character2} alt="avatar" />
             <h3>hamid</h3>
