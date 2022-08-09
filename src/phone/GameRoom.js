@@ -29,7 +29,7 @@ const GameRoom = () => {
 
         <div className="timer-container">
         <div className="timer-section">
-          <Timer InitialCount={200} />
+          <Timer InitialCount={260} />
         </div>
         <div className="vote-btn">
           {isSpy ? (

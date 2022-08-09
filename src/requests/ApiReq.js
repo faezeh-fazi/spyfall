@@ -11,7 +11,7 @@ const CreateRoom = () => {
     return axios.post(`${baseUrl}/room`, data);
   };
 
-  return { create };
+  return { createRoom };
 };
 
 export default CreateRoom;

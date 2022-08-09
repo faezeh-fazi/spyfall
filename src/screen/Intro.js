@@ -4,15 +4,9 @@ import "../style/main.css";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import RoomReq from "../context/RoomReq";
-import { RoomContext} from "../context/RoomContext";
-import CreateRoom from "../requests/ApiReq";
+
 
 const Intro = () => {
-  const {room, setRoom } = useContext(RoomContext)
-  const { headers } = RoomReq();
-
-  const {create} = CreateRoom()
-
   const [roomData, setroomData] = useState({});
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
@@ -26,31 +20,32 @@ const Intro = () => {
     localStorage.clear();
 
   }, []);
-  debugger
-  const handleSubmit = async () => {
-    debugger
-    try{
-      let room = await createRoom(data);
-      setRoom(room.data);
+  const handleSubmit = () => {
+    try {
+      axios.post(`${baseUrl}/room`, data).then(async (response) => {
+        setroomData(response.data);
+        localStorage.setItem("token", JSON.stringify(response.data.token));
+        console.log(roomData);
+        navigate(`/room`);
+      });
+    } catch (error) {
+      console.log(error);
     }
-    catch(ex){
-      debugger
-    }
-    debugger
-  }
-    
-  // const handleSubmit = () => {
-  //   try {
-  //     axios.post(`${baseUrl}/room`, data).then(async (response) => {
-  //       setroomData(response.data);
-  //       localStorage.setItem("token", JSON.stringify(response.data.token));
-  //       console.log(roomData);
-  //       navigate(`/room`);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
+  };
+  // debugger
+  // const handleSubmit = async () => {
+  //   debugger
+  //   try{
+  //     let room = await createRoom(data);
+  //     setRoom(room.data);
   //   }
-  // };
+  //   catch(ex){
+  //     debugger
+  //   }
+  //   debugger
+  // }
+    
+
   return (
     <>
       <div className="full-screen bg-home">

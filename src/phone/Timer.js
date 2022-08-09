@@ -16,16 +16,6 @@ export default function Timer({InitialCount}) {
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
 
-  // const handleStart = () => {
-  //   setStatus(STATUS.STARTED);
-  // };
-  // const handleStop = () => {
-  //   setStatus(STATUS.STOPPED);
-  // };
-  // const handleReset = () => {
-  //   setStatus(STATUS.STOPPED);
-  //   setSecondsRemaining(InitialCount);
-  // };
   useInterval(
     () => {
       if (secondsRemaining > 0) {

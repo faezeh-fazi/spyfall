@@ -15,18 +15,17 @@ import character11 from "../assets/avatars/c11.png";
 import character12 from "../assets/avatars/c12.png";
 import { useNavigate } from "react-router-dom";
 import RoomReq from "../context/RoomReq";
-import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
+import jwt_decode from "jwt-decode";
+import useSignalR from "../requests/SignalR";
 
 const CharacterList = () => {
   const { headers } = RoomReq();
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const [connection, setConnection] = useState(null);
-  const latestPlayers = useRef(null);
-
-  // latestPlayers.current = room.players;
-  const [room, setRoom] = useState({ players: [] });
-  // const [isVip, setIsVip] = useState(false);
+  const [room, setRoom] = useState({});
+  const [location, setLocation] = useState({})
   const navigate = useNavigate();
+  const { connection } = useSignalR();
+
 
   useEffect(() => {
     getRoom();
@@ -42,62 +41,50 @@ const CharacterList = () => {
     }
   }
   const players = room.players;
-  let isVip = false;
-  if (room && room.players) {
-    isVip = room.players.some((element) => {
-      if (element.isVIP === true) {
-        return true;
-      }
-      return false;
-    });
+
+  const token = JSON.parse(localStorage.getItem("token"));
+  const decodedToken = jwt_decode(token);
+  if (token === null) {
+    navigate("/");
   }
 
   const onSubmit = () => {
     axios.post(`${baseUrl}/room/start`, {}, { headers }).then((response) => {
       if (response.status == 200) {
         setTimeout(() => {
-          navigate("/startpage");
+          navigate("/startpage", {state: location});
         }, 3000);
       }
     });
   };
-  const token = JSON.parse(localStorage.getItem("token"));
-  if (token === null) {
-    navigate("/");
-  }
 
+  
   useEffect(() => {
-    const newConnection = new HubConnectionBuilder()
-      .withUrl(`${baseUrl}/roomsHub`, {
-        accessTokenFactory: () => token,
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-      })
-      .withAutomaticReconnect()
-      .build();
+    (async () => {
+      try {
+        if (connection && room?.code) {
+          connection.start().then(() => {
 
-    setConnection(newConnection);
-  }, []);
-
-  useEffect(() => {
-    if (connection) {
-      connection
-        .start()
-        .then((result) => {
-          console.log("Connected!");
-          connection.on("PlayerUpdate", (message) => {
-            const updatedPlayers = [...room.players];
-            updatedPlayers.push(message);
-            setRoom({ ...room, players: updatedPlayers });
+            connection.on("GameNotifications", (message) => {
+              setLocation(message.data)
+              console.log(message)
+            });
+            connection.invoke("AssignToGroup", room.code).then((resp) => {
+              console.log(resp);
+            });
           });
-        })
-        .catch((e) => console.log("Connection failed: ", e));
-    }
-  }, [connection]);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, [connection, room]);
+
 
   return (
     <>
-      {room && players && (
+    
+      {room && players && decodedToken &&(
         <div className="full-screen bg-home">
           <div className="avatar-container">
             <h5>Select Your Character</h5>
@@ -115,7 +102,7 @@ const CharacterList = () => {
               <img src={character11} alt="avatar" />
               <img src={character12} alt="avatar" />
             </div>
-            {players[0] ? (
+            {decodedToken.isVIP === "True"? (
               <button
                 className="vip-start-btn"
                 onClick={onSubmit}
@@ -125,9 +112,10 @@ const CharacterList = () => {
               </button>
             ) : (
               <>
-                <h6>Wait for other players</h6>
-                <br />
+                <h6 >Wait for other players</h6>
               </>
+                
+              
             )}
           </div>
         </div>
