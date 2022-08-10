@@ -7,7 +7,9 @@ import {
   } from "@microsoft/signalr";
 
 
+
 const useSignalR = () => {
+
   const [players, setPlayers] = useState([]);
   const [connection, setConnection] = useState();
   const baseUrl = process.env.REACT_APP_BASE_URL;

@@ -27,6 +27,7 @@ const CharacterList = () => {
   const { connection } = useSignalR();
 
 
+  
   useEffect(() => {
     getRoom();
   }, []);
@@ -41,7 +42,6 @@ const CharacterList = () => {
     }
   }
   const players = room.players;
-
   const token = JSON.parse(localStorage.getItem("token"));
   const decodedToken = jwt_decode(token);
   if (token === null) {
@@ -51,13 +51,16 @@ const CharacterList = () => {
   const onSubmit = () => {
     axios.post(`${baseUrl}/room/start`, {}, { headers }).then((response) => {
       if (response.status == 200) {
-        setTimeout(() => {
-          navigate("/startpage", {state: location});
-        }, 3000);
+
       }
     });
   };
 
+  useEffect(() => {
+    if(Object.keys(location).length > 0){
+      navigate("/startpage", {state: location});
+    }
+  }, [location])
   
   useEffect(() => {
     (async () => {
@@ -66,8 +69,9 @@ const CharacterList = () => {
           connection.start().then(() => {
 
             connection.on("GameNotifications", (message) => {
-              setLocation(message.data)
               console.log(message)
+              setLocation(message.data);
+            
             });
             connection.invoke("AssignToGroup", room.code).then((resp) => {
               console.log(resp);
@@ -83,7 +87,6 @@ const CharacterList = () => {
 
   return (
     <>
-    
       {room && players && decodedToken &&(
         <div className="full-screen bg-home">
           <div className="avatar-container">
@@ -105,7 +108,7 @@ const CharacterList = () => {
             {decodedToken.isVIP === "True"? (
               <button
                 className="vip-start-btn"
-                onClick={onSubmit}
+                onClick={() => onSubmit()}
                 type="button"
               >
                 everyone is in

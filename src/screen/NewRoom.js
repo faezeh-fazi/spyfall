@@ -36,29 +36,31 @@ const NewRoom = () => {
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (connection && room?.code) {
-          connection.start().then(() => {
-            connection.on("PlayerUpdate", (player) => {
-              setRoom((prevState) => {
-                return {
-                  ...prevState,
-                  players: [...prevState.players, player],
-                };
-              });
-            });
-
-            connection.invoke("AssignToGroup", room.code).then((resp) => {
-              console.log(resp);
+   const signalrConnection = async () => {
+    try {
+      if (connection && room?.code) {
+        connection.start().then(() => {
+          connection.on("PlayerUpdate", (player) => {
+            setRoom((prevState) => {
+              return {
+                ...prevState,
+                players: [...prevState.players, player],
+              };
             });
           });
-        }
-      } catch (e) {
-        console.log(e);
+
+          connection.invoke("AssignToGroup", room.code).then((resp) => {
+            console.log(resp);
+          });
+        });
       }
-    })();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    signalrConnection()
   }, [connection, room]);
 
   return (
