@@ -25,7 +25,7 @@ const GuessLocation = () => {
   }, [search]);
 
   const onSubmit = (location) => {
-    axios.post(`${baseUrl}/room/spy/${location.replace(/\s/g, "")}`, {}, { headers }).then((response) => {
+    axios.post(`${baseUrl}/room/spy/${location}`, {}, { headers }).then((response) => {
       if (response.status == 200 && response.response == true) {
           navigate("/spyWin");
       }

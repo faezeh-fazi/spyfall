@@ -45,12 +45,19 @@ const NewRoom = () => {
               console.log(player);
 
               setRoom((prevState) => {
-                return {
-                  players: [...prevState.players, player.data.player],
-                };
+                if(!prevState.players.some(x=> x.playerId == player.data.player.playerId)){
+                  return {
+                    players: [...prevState.players, player.data.player],
+                  };
+                }else{
+                  let oldPlayers = prevState.players.filter(x=>x.playerId != player.data.player.playerId)
+                  return {
+                    players: [...oldPlayers, player.data.player],
+                  };
+                }
               });
               console.log(room.players);
-              setPhoto(player.data.player.photo);
+              setPhoto(player.data.player.playerPicture);
 
               // setRoom((prevState) => {
               //   return {
@@ -96,7 +103,7 @@ const NewRoom = () => {
           {room.players.map((player) => (
             <div className="memebers" key={player.playerId}>
               <img
-                src={`https://localhost:7154/avatars/${player.photo}.png`}
+                src={`https://localhost:7154/avatars/${player.playerPicture}.png`}
                 alt="avatar"
               />
               <h3>{player.playerId}</h3>

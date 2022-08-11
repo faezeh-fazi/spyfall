@@ -15,6 +15,7 @@ const useSignalR = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const token = JSON.parse(localStorage.getItem("token"));
 
+
   useEffect(() => {
     const connection = new HubConnectionBuilder()
       .withUrl(`${baseUrl}/roomsHub`, {
@@ -34,5 +35,11 @@ const useSignalR = () => {
     players,
   };
 };
+
+const disconnectSignalR =() => {
+  // if (connection.state == HubConnectionState.Connected) {
+  //   connection.stop();
+  // }
+}
 
 export default useSignalR
