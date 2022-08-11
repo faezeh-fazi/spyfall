@@ -36,8 +36,7 @@ const FirstRound = () => {
       .post(`${baseUrl}/room/location/confirm`, {}, { headers })
       .then((response) => {
         if (response.status == 200) {
-            // navigate("/game", {state: loc.state});
-          
+          // navigate("/game", {state: loc.state});
         }
       });
   };
@@ -46,26 +45,17 @@ const FirstRound = () => {
     axios
       .post(`${baseUrl}/room/location/confirm`, {}, { headers })
       .then((response) => {
-        debugger
-        if (response.status == 200 ) {
-        
-          
+        if (response.status == 200) {
         }
       });
-
-
-  }
-
-  console.log(loc.state)
-
+  };
 
   useEffect(() => {
-    if(Object.keys(startData).length > 0){
-      navigate("/game", {state: loc.state});
+    if (Object.keys(startData).length > 0) {
+      navigate("/game", { state: loc.state });
     }
-  }, [startData])
+  }, [startData]);
 
- 
   useEffect(() => {
     (async () => {
       try {
@@ -75,7 +65,7 @@ const FirstRound = () => {
               console.log(message);
               //  setStartData(message.payload);
             });
-            
+
             connection.on("GameNotifications", (message) => {
               console.log(message);
               setStartData(message);
@@ -96,7 +86,6 @@ const FirstRound = () => {
   const handleFlip = () => {
     setFlip(!flip);
   };
-
 
   return (
     <>
@@ -119,30 +108,37 @@ const FirstRound = () => {
           </div>
           <div className="start-game">
             {decodedToken.isVIP == "True" ? (
-              <div style={{display:"flex", flexDirection: "column", gap:"20px"}}>
-               {/* <button
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                }}
+              >
+                {/* <button
             className="vip-start-btn"
             onClick={confirmLoc}
             type="button"
           >
             Confirm 
           </button> */}
+                <button
+                  className="vip-start-btn"
+                  onClick={startGame}
+                  type="button"
+                >
+                  start the game
+                </button>
+              </div>
+            ) : (
               <button
                 className="vip-start-btn"
-                onClick={startGame}
+                onClick={confirmLoc}
                 type="button"
               >
-                start the game
+                Confirm
               </button>
-              </div>
-            ) : 
-            <button
-            className="vip-start-btn"
-            onClick={confirmLoc}
-            type="button"
-          >
-            Confirm 
-          </button>}
+            )}
           </div>
         </div>
       )}

@@ -26,9 +26,11 @@ const GuessLocation = () => {
 
   const onSubmit = (location) => {
     axios.post(`${baseUrl}/room/spy/${location.replace(/\s/g, "")}`, {}, { headers }).then((response) => {
-      if (response.status == 200) {
-        console.log(response.data)
-          navigate("/vote");
+      if (response.status == 200 && response.response == true) {
+          navigate("/spyWin");
+      }
+      else {
+        navigate("/spyLose");
       }
     })
   };
@@ -41,7 +43,7 @@ const GuessLocation = () => {
                 type="text"
                 placeholder="Search here"
                 className="w-90 form-control"
-                style={{  height: "35px", width:"350px" }}
+                style={{  height: "35px", width:"330px" }}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />

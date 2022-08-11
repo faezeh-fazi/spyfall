@@ -6,14 +6,17 @@ import character3 from "../assets/avatars/c3.png";
 import character4 from "../assets/avatars/c4.png";
 import RoomReq from "../context/RoomReq";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useSignalR from "../requests/SignalR";
 
 const NewRoom = () => {
+  const loc = useLocation();
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const { headers } = RoomReq();
   const [room, setRoom] = useState({ players: [] });
+  const [roomData, setRoomData] = useState({});
+  const [photo, setPhoto] = useState("");
   const latestPlayers = useRef(null);
   latestPlayers.current = room.players;
   const token = JSON.parse(localStorage.getItem("token"));
@@ -22,45 +25,63 @@ const NewRoom = () => {
     navigate("/");
   }
 
-  useEffect(() => {
-    getRoom();
-  }, []);
-
-  async function getRoom() {
+  const signalrConnection = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/room/data`, { headers });
-      setRoom(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-   const signalrConnection = async () => {
-    try {
-      if (connection && room?.code) {
+      if (connection && loc.state.room?.code) {
         connection.start().then(() => {
           connection.on("PlayerUpdate", (player) => {
-            setRoom((prevState) => {
-              return {
-                ...prevState,
-                players: [...prevState.players, player],
-              };
-            });
-          });
+            if(player.payload === "NewJoin")
+            {
+                    console.log(room.players);
+                    // setRoom((prevState) => {
+                    //   return {
+                    //     ...prevState,
+                    //     players: [...prevState.players, player],
+                    //   };
+                    // });
+            }
+            if(player.payload === "PhotoUpdate")
+            {
+              console.log(player);
 
-          connection.invoke("AssignToGroup", room.code).then((resp) => {
-            console.log(resp);
+              setRoom((prevState) => {
+                return {
+                  players: [...prevState.players, player.data.player],
+                };
+              });
+              console.log(room.players);
+              setPhoto(player.data.player.photo);
+
+              // setRoom((prevState) => {
+              //   return {
+              //     ...prevState,
+              //     players: [...prevState.players, player],
+              //   };
+              // });
+            }
+     
           });
+          connection.on("RoomData", (data) => {
+            setRoomData(data);
+          });
+          connection.on("GameNotifications", (data) => {
+            console.log(data)
+            setRoomData(data);
+          });
+          connection
+            .invoke("AssignToGroup", loc.state.room.code)
+            .then((resp) => {
+              console.log(resp);
+            });
         });
       }
     } catch (e) {
       console.log(e);
     }
-  }
-
+  };
+  console.log(room)
   useEffect(() => {
-    signalrConnection()
+    signalrConnection();
   }, [connection, room]);
 
   return (
@@ -68,13 +89,16 @@ const NewRoom = () => {
       <div className="full-screen bg-home">
         <div className="room-code">
           <h3>Room code</h3>
-          <h2>{room.code}</h2>
+          <h2>{loc.state.room.code}</h2>
         </div>
 
         <section className="avatars">
           {room.players.map((player) => (
             <div className="memebers" key={player.playerId}>
-              <img src={character1} alt="avatar" />
+              <img
+                src={`https://localhost:7154/avatars/${player.photo}.png`}
+                alt="avatar"
+              />
               <h3>{player.playerId}</h3>
             </div>
           ))}

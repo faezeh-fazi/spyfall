@@ -13,25 +13,28 @@ const Intro = () => {
   const [data, setData] = useState({
     spyCount: 0,
     startAsPlayer: false,
-    roundMinutes: 0,
+    roundMinutes: "260",
   });
 
   useEffect(() => {
     localStorage.clear();
 
   }, []);
+
   const handleSubmit = () => {
     try {
       axios.post(`${baseUrl}/room`, data).then(async (response) => {
+        console.log(response.data)
         setroomData(response.data);
         localStorage.setItem("token", JSON.stringify(response.data.token));
         console.log(roomData);
-        navigate(`/room`);
+        navigate(`/room`, {state: response.data});
       });
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(roomData)
   // debugger
   // const handleSubmit = async () => {
   //   debugger
@@ -58,6 +61,20 @@ const Intro = () => {
 
         <div className="start-game-btn-area">
           <div className="setting-select">
+          <Form.Select
+              required
+              size="md"
+              onChange={(e) =>
+                setData((prevState) => {
+                  return { ...prevState, roundMinutes: e.target.value };
+                })
+              }
+            >
+              <option> Timer</option>
+              <option value="260">04:20</option>
+              <option value="300">05:00</option>
+              <option value="360">06:00</option>
+            </Form.Select>
             <Form.Select
               required
               size="md"
@@ -72,9 +89,9 @@ const Intro = () => {
               <option value="2">Two</option>
               <option value="3">Three</option>
             </Form.Select>
-            {data.spyCount == 0 ? (
+            {/* {data.spyCount == 0 ? (
               <span className="waviy">Select Spy Count</span>
-            ) : null}
+            ) : null} */}
           </div>
           <button className="start-btn" onClick={handleSubmit} type="button">
             new game

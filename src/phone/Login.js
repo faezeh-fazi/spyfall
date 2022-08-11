@@ -33,7 +33,7 @@ const Login = () => {
       <NavbarComponent />
       <div className="login-cont">
         <form className="login" onSubmit={handleSubmit(onSubmit)}>
-          <label>
+          <label style={{color:"white"}}>
             Name
             <br />
             <input
@@ -44,7 +44,7 @@ const Login = () => {
             />
           </label>
           {errors.PlayerName  && <span>This field is required</span>}
-          <label>
+          <label style={{color:"white"}}>
             Room Code
             <br />
             <input

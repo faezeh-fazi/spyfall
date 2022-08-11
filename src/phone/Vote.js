@@ -32,9 +32,9 @@ const Vote = () => {
       }
     })
   };
+
+
   const players = room.players;
-
-
   console.log(players)
   return (
     <>

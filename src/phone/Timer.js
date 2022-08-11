@@ -26,11 +26,10 @@ export default function Timer({InitialCount}) {
     },
     status === STATUS.STARTED ? 1000 : null
   );
-
   return (
     <>
       <div style={{ padding: 20 }}>
-        {!(twoDigits(minutesToDisplay) && twoDigits(secondsToDisplay) == "00" )? (
+        {!((secondsRemaining) == "00" )? (
 
            <>{twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}</>
           

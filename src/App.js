@@ -11,6 +11,8 @@ import GameRoom from "./phone/GameRoom";
 import Vote from "./phone/Vote";
 import GuessLocation from "./phone/GuessLocation";
 import ScreenVote from "./screen/ScreenVote";
+import SpyWins from "./phone/SpyWins";
+import SpyLoses from "./phone/SpyLoses";
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
             <Route path="/characterlist" element={<CharacterList />} />
             <Route path="/vote" element={<Vote />} />
             <Route path="/spy-guess" element={<GuessLocation />} />
+            <Route path="/spyWin" element={<SpyWins />} />
+            <Route path="/spyLose" element={<SpyLoses />} />
           </Routes>
       </div>
     </BrowserRouter>

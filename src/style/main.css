@@ -2,10 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 body {
   font-family: "CRAMPS", sans-serif;
+  background-image: url("../assets/bgpic.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+background-position: center;
+
 
 }
 
@@ -19,14 +26,14 @@ body {
 
 }
 
-.bg-home {
+/* .bg-home {
   background-image: url("../assets/bgpic.jpg");
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
 background-position: center;
 
-}
+} */
 
 
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
@@ -101,14 +108,18 @@ background-position: center;
 }
 .setting-select {
   display: flex;
-  flex-direction: column;
+  font-family: 'Comic Sans MS';
+  font-weight: bold;
+  flex-direction: row;
   color: #ffffff;
   align-content: space-between;
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
+
   gap: 10px;
 }
+
 
 .start-btn {
   font-size: 45px;
@@ -184,3 +195,45 @@ background-position: center;
     border-radius: 20px;
   }
 }
+
+.game-status{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+/* kioiko */
+
+.line h2 {
+  text-align: center;
+  margin: 250px auto;
+}
+
+.pop-outin {
+  animation: 2s anim-popoutin ease infinite;
+}
+
+@keyframes anim-popoutin {
+  0% {
+    color: rgb(255, 255, 255);
+    transform: scale(0);
+    opacity: 0;
+  }
+  25% {
+    color: red;
+    transform: scale(2);
+    opacity: 1;
+  }
+  50% {
+    color: rgb(255, 255, 255);
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    /* animate nothing to add pause at the end of animation */
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+

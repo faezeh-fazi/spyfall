@@ -24,13 +24,13 @@ padding-bottom: 20px;
 }
 
 .places-list {
+    margin: 20px;
     display: grid;
     margin-top: 20px;
     grid-template-columns: repeat(2, 50%);
     row-gap: 10px;
     align-items: center;
     justify-items: center;
-    margin-bottom: 100px;
 
 }
 .loc {
@@ -68,7 +68,7 @@ padding-bottom: 20px;
     }
     .location-btn{
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    width: 350px;
+    width: 300px;
     height: 35px;
     border-radius: 10px;
     background-color: darkslategrey;
