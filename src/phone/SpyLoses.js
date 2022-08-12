@@ -5,8 +5,8 @@ const SpyLoses = () => {
   return (
     <>
       <div className="full-screen bg-home">
-        <div class="line">
-          <h2 class="pop-outin">You lose</h2>
+        <div className="line">
+          <h2 className="pop-outin">You lose</h2>
         </div>{" "}
       </div>
     </>

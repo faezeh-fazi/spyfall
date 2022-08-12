@@ -24,30 +24,15 @@ const Intro = () => {
   const handleSubmit = () => {
     try {
       axios.post(`${baseUrl}/room`, data).then(async (response) => {
-        console.log(response.data)
         setroomData(response.data);
         localStorage.setItem("token", JSON.stringify(response.data.token));
-        console.log(roomData);
         navigate(`/room`, {state: response.data});
       });
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(roomData)
-  // debugger
-  // const handleSubmit = async () => {
-  //   debugger
-  //   try{
-  //     let room = await createRoom(data);
-  //     setRoom(room.data);
-  //   }
-  //   catch(ex){
-  //     debugger
-  //   }
-  //   debugger
-  // }
-    
+
 
   return (
     <>

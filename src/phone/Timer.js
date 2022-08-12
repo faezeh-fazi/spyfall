@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style/timer.css";
 
 const STATUS = {
@@ -6,12 +7,10 @@ const STATUS = {
   STOPPED: "Stopped",
 };
 
-
-
-export default function Timer({InitialCount}) {
+export default function Timer({ InitialCount }) {
   const [secondsRemaining, setSecondsRemaining] = useState(InitialCount);
   const [status, setStatus] = useState(STATUS.STARTED);
-
+  const navigate = useNavigate();
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
@@ -29,13 +28,14 @@ export default function Timer({InitialCount}) {
   return (
     <>
       <div style={{ padding: 20 }}>
-        {!((secondsRemaining) == "00" )? (
-
-           <>{twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}</>
-          
-        ) : 
-        <h1 style={{fontSize: "55px", fontWeight:"bold"}}>Time is up</h1>
-        }
+        {!(secondsRemaining == "00") ? (
+          <>
+            {twoDigits(minutesToDisplay)}:{twoDigits(secondsToDisplay)}
+          </>
+        ) : (
+          <h1 style={{ fontSize: "55px", fontWeight: "bold" }}>Time is up</h1>
+        )}
+        {/* {InitialCount >= 40 ? (navigate("/game")) : navigate("/vote")} */}
       </div>
     </>
   );

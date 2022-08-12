@@ -16,6 +16,8 @@ const CharacterList = () => {
   const navigate = useNavigate();
   const { connection } = useSignalR();
 
+
+
   useEffect(() => {
     getRoom();
   }, []);
@@ -32,9 +34,7 @@ const CharacterList = () => {
   const players = room.players;
   const token = JSON.parse(localStorage.getItem("token"));
   const decodedToken = jwt_decode(token);
-  if (token === null) {
-    navigate("/");
-  }
+
 
   const onSubmit = () => {
     axios.post(`${baseUrl}/room/start`, {}, { headers }).then((response) => {

@@ -51,5 +51,40 @@ body {
 
 .avatars h3 {
   color: aliceblue;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family:cursive ;
+}
+
+
+/* animation */
+
+.xbox {
+  font-size: 100px;
+  display: flex;
+  color: #ffffff;
+}
+
+.showSpy{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin: 150px auto;
+  gap: 20px;
+}
+.showSpy img {
+  height: 200px;
+}
+
+.showSpy div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.showSpy h3 {
+  font-size: 45px;
+  color: aliceblue;
+  font-family:cursive ;
 }

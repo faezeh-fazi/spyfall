@@ -1,9 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../style/room.css";
-import character1 from "../assets/avatars/c1.png";
-import character2 from "../assets/avatars/c2.png";
-import character3 from "../assets/avatars/c3.png";
-import character4 from "../assets/avatars/c4.png";
 import RoomReq from "../context/RoomReq";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,24 +17,22 @@ const NewRoom = () => {
   latestPlayers.current = room.players;
   const token = JSON.parse(localStorage.getItem("token"));
   const { connection } = useSignalR();
-  if (!token) {
-    navigate("/");
-  }
+
+  useEffect(() => {
+    localStorage.clear();
+
+  }, []);
 
   const signalrConnection = async () => {
     try {
       if (connection && loc.state.room?.code) {
         connection.start().then(() => {
           connection.on("PlayerUpdate", (player) => {
+           
             if(player.payload === "NewJoin")
             {
                     console.log(room.players);
-                    // setRoom((prevState) => {
-                    //   return {
-                    //     ...prevState,
-                    //     players: [...prevState.players, player],
-                    //   };
-                    // });
+                    // TODO : add the new joined
             }
             if(player.payload === "PhotoUpdate")
             {
@@ -56,7 +50,6 @@ const NewRoom = () => {
                   };
                 }
               });
-              console.log(room.players);
               setPhoto(player.data.player.playerPicture);
 
               // setRoom((prevState) => {
@@ -72,6 +65,10 @@ const NewRoom = () => {
             setRoomData(data);
           });
           connection.on("GameNotifications", (data) => {
+            if(data.payload === "AllRolesConfirmed"){
+              
+              navigate("/gametime")
+            }
             console.log(data)
             setRoomData(data);
           });
@@ -109,19 +106,9 @@ const NewRoom = () => {
               <h3>{player.playerId}</h3>
             </div>
           ))}
-          {/* <div className="memebers">
-            <img src={character2} alt="avatar" />
-            <h3>hamid</h3>
-          </div>
-          <div className="memebers">
-            <img src={character3} alt="avatar" />
-            <h3>ahmad</h3>
-          </div>
-          <div className="memebers">
-            <img src={character4} alt="avatar" />
-            <h3>amir</h3>
-          </div> */}
+
         </section>
+       
       </div>
     </>
   );
