@@ -225,10 +225,14 @@ background-position: center;
   margin: 250px auto;
 }
 
-.pop-outin {
+.lose {
   animation: 2s anim-popoutin ease infinite;
 }
 
+
+.won {
+  animation: 2s anim-won ease infinite;
+}
 @keyframes anim-popoutin {
   0% {
     color: rgb(255, 255, 255);
@@ -236,12 +240,12 @@ background-position: center;
     opacity: 0;
   }
   25% {
-    color: red;
+    color: rgb(167, 0, 0);
     transform: scale(2);
     opacity: 1;
   }
   50% {
-    color: rgb(255, 255, 255);
+    color: rgb(255, 205, 205);
     transform: scale(1);
     opacity: 1;
   }
@@ -252,6 +256,24 @@ background-position: center;
   }
 }
 
+@keyframes anim-won {
+
+  25% {
+    color: rgb(0, 129, 28);
+    transform: scale(2);
+    opacity: 1;
+  }
+  50% {
+    color: rgb(224, 255, 214);
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    /* animate nothing to add pause at the end of animation */
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 /* tijme */
 .timer-group {
   height: 400px;

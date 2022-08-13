@@ -5,7 +5,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import useSignalR from "../requests/SignalR";
 
-const ShowSpy = () => {
+const GameResult = () => {
   const { connection } = useSignalR();
   const loc = useLocation();
   const { headers } = RoomReq();
@@ -14,7 +14,9 @@ const ShowSpy = () => {
   const [room, setRoom] = useState({});
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const spyIds = loc.state.data.spysIds;
+  const spyIds = loc.state.data.spys;
+  console.log(loc.state)
+
   useEffect(() => {
     getRoom();
   }, []);
@@ -50,15 +52,24 @@ const ShowSpy = () => {
     <>
       {room && room.players && (
         <div className="full-screen bg-home">
-          <div className="showSpy">
-            {spyIds.length > 1 ? (
-              <div className="xbox">Spys are</div>
-            ) : (
-              <div className="xbox">Spy is</div>
-            )}
+            {loc.state.data.spysWon === true ? 
+            <>
+              <div className="resultLoc">The location is {loc.state.data.location}</div>
+              <div className="xbox">The spy guessed<span style={{color: "green"}}>&nbsp; right</span></div>
+              </>
+            :
+            <>
+      <>
+              <div className="resultLoc">The location is{loc.state.data.location}</div>
+              <div className="xbox">The spy guessed <span style={{color: "red"}}>&nbsp; wrong</span></div>
+              </>              </>
+            }
+            
+          <div className="showSpy">        
+            <div className="spy-img">
             {room.players.map((player) =>
               player.isSpy ? (
-                <div className="memebers" key={player.playerId}>
+                <div className="members" key={player.playerId}>
                   <img
                     src={`https://localhost:7154/avatars/${player.playerPicture}.png`}
                     alt="avatar"
@@ -67,6 +78,7 @@ const ShowSpy = () => {
                 </div>
               ) : null
             )}
+            </div>
           </div>
         </div>
       )}
@@ -74,4 +86,4 @@ const ShowSpy = () => {
   );
 };
 
-export default ShowSpy;
+export default GameResult;

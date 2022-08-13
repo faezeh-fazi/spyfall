@@ -6,7 +6,7 @@ const SpyLoses = () => {
     <>
       <div className="full-screen bg-home">
         <div className="line">
-          <h2 className="pop-outin">You lose</h2>
+          <h2 className="lose">Spy lose</h2>
         </div>{" "}
       </div>
     </>

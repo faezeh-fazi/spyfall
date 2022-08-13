@@ -65,6 +65,17 @@ const GameRoom = () => {
         navigate("/waitforspy", { state: loc.state });
       }
     }
+
+    if (
+      Object.keys(voteData).length > 0 &&
+      voteData.payload === "GameFinished"
+    ) {
+      if (voteData.data.spysWon === true) {
+        navigate("/spyWin", { state: loc.state });
+      } else {
+        navigate("/spyLose", { state: loc.state });
+      }
+    }
   }, [voteData]);
 
 

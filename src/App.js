@@ -17,7 +17,8 @@ import GameTimer from "./screen/GameTimer";
 import GameRound from "./screen/GameRound";
 import PrivateRoute from "./PrivateRoutes";
 import WaitForSpy from "./phone/WaitForSpy";
-import ShowSpy from "./phone/ShowSpy";
+import ShowSpy from "./screen/ShowSpy";
+import GameResult from "./screen/GameResult";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <Route path="/showSpy" element={<PrivateRoute><ShowSpy /></PrivateRoute>} />
             <Route path="/spyWin" element={<PrivateRoute><SpyWins /></PrivateRoute>} />
             <Route path="/spyLose" element={<PrivateRoute><SpyLoses /></PrivateRoute>} />
+            <Route path="/result" element={<PrivateRoute><GameResult /></PrivateRoute>} />
           </Routes>
       </div>
     </BrowserRouter>
