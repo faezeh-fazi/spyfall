@@ -105,7 +105,7 @@ const GuessLocation = () => {
         </div>
         <div className="places-list">
           {filtered.map((item) => (
-            <button className="location-btn" value={item} type="button" onClick={(e)=> onSubmit(e.target.value)}>
+            <button className="location-btn" key={item} value={item} type="button" onClick={(e)=> onSubmit(e.target.value)}>
               {item}
             </button>
           ))}

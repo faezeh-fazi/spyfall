@@ -31,7 +31,16 @@ const GameRound = () => {
   }
   useEffect(() => {
     if (Object.keys(roomData).length > 0) {
-      navigate("/showSpy", {state: roomData})
+      if(roomData.payload === "VoteStart")
+      {
+        navigate("/screenVote", {state: roomData})
+
+      }
+      else{
+
+        navigate("/showSpy", {state: roomData})
+      }
+
     }
   }, [roomData]);
 

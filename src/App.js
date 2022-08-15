@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Intro />} />
             <Route path="/room" element={<PrivateRoute> <NewRoom /></PrivateRoute>} />
-            <Route path="/screen-vote" element={<PrivateRoute><ScreenVote /></PrivateRoute> } />
+            <Route path="/screenVote" element={<PrivateRoute><ScreenVote /></PrivateRoute> } />
             <Route path="/gametime" element={<PrivateRoute><GameRound /></PrivateRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="/startpage" element={<PrivateRoute><FirstRound /></PrivateRoute>} />

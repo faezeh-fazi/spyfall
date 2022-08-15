@@ -60,7 +60,7 @@ const GameResult = () => {
             :
             <>
       <>
-              <div className="resultLoc">The location is{loc.state.data.location}</div>
+              <div className="resultLoc">The location is {loc.state.data.location}</div>
               <div className="xbox">The spy guessed <span style={{color: "red"}}>&nbsp; wrong</span></div>
               </>              </>
             }
