@@ -14,6 +14,7 @@ const ScreenVote = () => {
   const navigate = useNavigate();
   const [room, setRoom] = useState({});
   const [votes, setVotes] = useState({});
+  const [playersVotes, setPlayersVotes] = useState([]);
   const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
@@ -24,29 +25,44 @@ const ScreenVote = () => {
     try {
       const response = await axios.get(`${baseUrl}/room/data`, { headers });
       setRoom(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const playersVotes = [];
+  // room.players?.map(x=> {
+  //   setPlayersVotes(prev =>[...prev, {playerName: x.playerId}] )
+  // })
+  console.log(room);
   useEffect(() => {
     if (Object.keys(votes).length > 0) {
-      if(votes.payload === "PlayerVote"){
-        debugger
-        playersVotes.push(votes.data.playersVotes.map(pv => pv.playerVote))
+      let vote = 0;
 
+      if (votes.payload === "PlayerVote") {
+        room.players?.forEach(function (item) {
+          if (item.playerName === votes.data.playerVote.playerVote) {
+            if (
+              playersVotes.some(
+                (p) => p.playerName === votes.data.playerVote.playerVote
+              )
+            ) {
+              const newstate = playersVotes.map((obj) => {
+                if (obj.playerName === votes.data.playerVote.playerVote) {
+                  return { ...obj, vote: obj.vote++ };
+                }
+              });
+            } else {
+              setPlayersVotes((prev) => [
+                ...prev,
+                { playerName: item.playerName, vote: vote + 1 },
+              ]);
+            }
+          }
+        });
       }
-
-    }
-    else{
-      console.log("k")
     }
   }, [votes]);
-
-  console.log(playersVotes)
-
+  console.log(playersVotes);
 
   useEffect(() => {
     (async () => {
@@ -54,8 +70,7 @@ const ScreenVote = () => {
         if (connection && room?.code) {
           connection.start().then(() => {
             connection.on("GameNotifications", (message) => {
-              console.log(message)
-              setVotes(message)
+              setVotes(message);
             });
             connection.invoke("AssignToGroup", room.code).then((resp) => {
               console.log(resp);
@@ -70,7 +85,7 @@ const ScreenVote = () => {
 
   return (
     <>
-      {room && room.players && votes && votes.data &&votes.data.playerVote && votes.data.playerVote.playerVote && (
+      {room && room.players && (
         <div className="full-screen bg-home">
           <section className="avatars">
             {room.players.map((player) => (
@@ -80,7 +95,13 @@ const ScreenVote = () => {
                   alt="avatar"
                 />
                 <h3>{player.playerId}</h3>
-                <h3>2</h3>
+                {playersVotes.map((p) =>
+                  p.playerName === player.playerName ? (
+                    <h3 key={p.playerName}>{p.vote}</h3>
+                  ) : (
+                    ""
+                  )
+                )}
               </div>
             ))}
           </section>
