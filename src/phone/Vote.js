@@ -15,11 +15,8 @@ const Vote = () => {
   const [room, setRoom] = useState([]);
   const [votes, setVotes] = useState({});
   const [playersVotes, setPlayersVotes] = useState([]);
-
-
   const token = JSON.parse(localStorage.getItem("token"));
   const decodedToken = jwt_decode(token);
-
   useEffect(() => {
     getRoom();
   }, []);
@@ -39,38 +36,34 @@ const Vote = () => {
       .then((response) => {
         if (response.status == 200) {
           console.log(response.data);
-          navigate("/vote");
+          // navigate("/vote");
         }
       });
   };
-
   useEffect(() => {
     if (Object.keys(votes).length > 0) {
-      // let vote = 0;
-      // if (votes.payload === "PlayerVote") {
+      if (votes.payload === "GameFinished") {
+        if (votes.data.spysWon) {
+          navigate("/spyWin", { state: votes });
+        } else {
+          navigate("/spyLose", { state: votes });
+        }
+      }
+      if (votes.payload === "PlayersRightGuess") {
+        if (votes.data.spysIds.some((id) => id === decodedToken.playerId))
+        {
+          navigate("/spy-guess", { state: votes.data });
 
-      //   room.players?.forEach(function (item) {
-      //     ;
-      //     if (item.playerName === votes.data.playerVote.playerVote) {
-      //       if(playersVotes.some(p=> p.playerName === votes.data.playerVote.playerVote)){
-      //         const newstate = playersVotes.map(obj => {
-      //           if(obj.playerName === votes.data.playerVote.playerVote ){
-      //             return {...obj, vote: obj.vote++}
-      //           }
 
-      //         })
-      //       }
-      //       else{
+        }else {
 
-      //         setPlayersVotes((prev) => [  ...prev,{ playerName: item.playerName, vote: vote+1}])
-      //       }
-      //     }
-      //   });
-      // }
+          navigate("/waitforspy", { state: votes });
+
+        }
+      }
     }
   }, [votes]);
 
-  console.log(playersVotes);
 
   useEffect(() => {
     (async () => {
@@ -120,6 +113,7 @@ const Vote = () => {
         </div>
       )}
     </>
+    
   );
 };
 

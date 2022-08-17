@@ -115,7 +115,7 @@ const GameRoom = () => {
                   onClick={navigateToGuessRoom}
                   type="button"
                 >
-                  I know the place 
+                  Vote Room
                 </button>
               ) : (
                 <button
@@ -123,7 +123,7 @@ const GameRoom = () => {
                   onClick={navigateToVoteRoom}
                   type="button"
                 >
-                  Vote for spy
+                  Vote Room
                 </button>
               )}
             </div>

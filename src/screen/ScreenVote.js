@@ -30,39 +30,50 @@ const ScreenVote = () => {
     }
   }
 
-  // room.players?.map(x=> {
-  //   setPlayersVotes(prev =>[...prev, {playerName: x.playerId}] )
-  // })
-  console.log(room);
   useEffect(() => {
+    console.log(votes);
     if (Object.keys(votes).length > 0) {
-      let vote = 0;
-
-      if (votes.payload === "PlayerVote") {
+      if (votes.payload === "GameFinished") {
+        navigate("/result", { state: votes });
+      }
+      if (votes.payload === "PlayersRightGuess") {
+        navigate("/showSpy", { state: votes });
+      }
+      let initailV = [];
+      if (room.players.length !== playersVotes.length) {
+        let vote = 0;
         room.players?.forEach(function (item) {
-          if (item.playerName === votes.data.playerVote.playerVote) {
-            if (
-              playersVotes.some(
-                (p) => p.playerName === votes.data.playerVote.playerVote
-              )
-            ) {
-              const newstate = playersVotes.map((obj) => {
-                if (obj.playerName === votes.data.playerVote.playerVote) {
-                  return { ...obj, vote: obj.vote++ };
-                }
-              });
-            } else {
-              setPlayersVotes((prev) => [
-                ...prev,
-                { playerName: item.playerName, vote: vote + 1 },
-              ]);
-            }
-          }
+          initailV.push({
+            playerName: item.playerName,
+            vote: vote,
+          });
         });
       }
+
+      if (votes.payload === "PlayerVote") {
+        if (playersVotes.length > 0) {
+          initailV = playersVotes;
+        }
+        if (
+          initailV.some(
+            (p) => p.playerName === votes.data.playerVote.playerVote
+          )
+        ) {
+          console.log(initailV);
+          initailV = initailV.map((obj) => {
+            if (obj.playerName === votes.data.playerVote.playerVote) {
+              obj.vote = obj.vote + 1;
+            }
+            return obj;
+          });
+        }
+      }
+      setPlayersVotes((prev) => {
+        const pr = initailV.length > 0 ? initailV : prev;
+        return pr;
+      });
     }
   }, [votes]);
-  console.log(playersVotes);
 
   useEffect(() => {
     (async () => {
