@@ -13,7 +13,6 @@ const ShowSpy = () => {
   const navigate = useNavigate();
   const [room, setRoom] = useState({});
   const token = JSON.parse(localStorage.getItem("token"));
-debugger
   const spyIds = loc.state.data.spysIds;
   useEffect(() => {
     getRoom();

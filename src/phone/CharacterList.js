@@ -51,11 +51,11 @@ const CharacterList = () => {
 
   useEffect(() => {
     if (Object.keys(photo).length > 0) {
-      if (photo.payload === "PhotoUpdate") {
-        const im = photo.data.disabledPhotos;
-        const intersection = room.avatars?.filter((element) =>
-          im.includes(element)
-        );
+      if (photo.payload === "PhotoUpdate" ) {
+        // const im = photo.data.disabledPhotos;
+        // const intersection = room.avatars?.filter((element) =>
+        //   im.includes(element)
+        // );
       }
     }
     if (Object.keys(location).length > 0) {

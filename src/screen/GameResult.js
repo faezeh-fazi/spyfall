@@ -12,6 +12,7 @@ const GameResult = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const [room, setRoom] = useState({});
+  const [killData, setKillData] = useState("");
   const token = JSON.parse(localStorage.getItem("token"));
 
   const spyIds = loc.state.data.spys;
@@ -30,13 +31,27 @@ const GameResult = () => {
       console.log(error);
     }
   }
+  useEffect(() => {
+    if (Object.keys(killData).length > 0) {
+      if(killData.payload === "KillRoom" )
+      {
+        navigate("/");
+      }
+      if (killData.payload === "StartGame") {
+        navigate("/startpage", { state: killData.data });
+      }
+    }
+  }, [killData]);
 
   useEffect(() => {
     (async () => {
       try {
         if (connection && room?.code) {
           connection.start().then(() => {
-            connection.on("GameNotifications", (message) => {});
+            connection.on("GameNotifications", (message) => {
+              console.log(message);
+              setKillData(message);
+            });
             connection.invoke("AssignToGroup", room.code).then((resp) => {
               console.log(resp);
             });
@@ -47,6 +62,7 @@ const GameResult = () => {
       }
     })();
   }, [connection, room]);
+
 
   return (
     <>
