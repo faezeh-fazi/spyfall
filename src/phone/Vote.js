@@ -92,7 +92,7 @@ const Vote = () => {
       {players && (
         <div className="full-screen bg-home">
           <div className="timer-section">
-            <Timer InitialCount={40} />
+            <Timer InitialCount={60} />
           </div>
           <div className="vote-section">
             <h5>Who is the spy</h5>

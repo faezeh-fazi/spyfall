@@ -19,7 +19,7 @@ const FirstRound = () => {
   const decodedToken = jwt_decode(token);
   const { connection } = useSignalR();
 
-
+console.log(loc)
   useEffect(() => {
     getRoom();
   }, []);

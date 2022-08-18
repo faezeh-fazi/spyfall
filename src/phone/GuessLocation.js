@@ -47,11 +47,8 @@ const GuessLocation = () => {
     
     axios.post(`${baseUrl}/room/spy/${location}`, {}, { headers }).then((response) => {
       if (response.status == 200) {
-          // navigate("/spyWin");
       }
-      // else {
-      //   navigate("/spyLose");
-      // }
+     
     })
   };
   

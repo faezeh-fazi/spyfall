@@ -12,11 +12,9 @@ const CharacterList = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [room, setRoom] = useState({});
   const [location, setLocation] = useState({});
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState({});
   const navigate = useNavigate();
   const { connection } = useSignalR();
-
-
 
   useEffect(() => {
     getRoom();
@@ -35,7 +33,6 @@ const CharacterList = () => {
   const token = JSON.parse(localStorage.getItem("token"));
   const decodedToken = jwt_decode(token);
 
-
   const onSubmit = () => {
     axios.post(`${baseUrl}/room/start`, {}, { headers }).then((response) => {
       if (response.status == 200) {
@@ -53,10 +50,20 @@ const CharacterList = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(location).length > 0) {
-      navigate("/startpage", { state: location });
+    if (Object.keys(photo).length > 0) {
+      if (photo.payload === "PhotoUpdate") {
+        const im = photo.data.disabledPhotos;
+        const intersection = room.avatars?.filter((element) =>
+          im.includes(element)
+        );
+      }
     }
-  }, [location]);
+    if (Object.keys(location).length > 0) {
+      if (location.payload === "StartGame") {
+        navigate("/startpage", { state: location.data });
+      }
+    }
+  }, [location, photo]);
 
   useEffect(() => {
     (async () => {
@@ -65,10 +72,12 @@ const CharacterList = () => {
           connection.start().then(() => {
             connection.on("GameNotifications", (message) => {
               console.log(message);
-              setLocation(message.data);
+              setLocation(message);
             });
             connection.on("PlayerUpdate", (message) => {
               console.log(message);
+              setPhoto(message);
+
               //setVoteData(message);
             });
             connection.invoke("AssignToGroup", room.code).then((resp) => {
@@ -82,7 +91,6 @@ const CharacterList = () => {
     })();
   }, [connection, room]);
 
-
   return (
     <>
       {room && players && decodedToken && (
@@ -90,16 +98,26 @@ const CharacterList = () => {
           <div className="avatar-container">
             <h5>Select Your Character</h5>
             <div className="avatar-images">
-              {room.avatars.map((avatar) => (
-                <img
-                  src={`https://localhost:7154/avatars/${avatar}.png`}
-                  alt="avatar"
-                  value={avatar}
-                  key={avatar}
-                  onClick={() => onSelectPhoto(avatar)}
-                />
-              ))}
-            
+              {room.avatars.map((avatar) =>
+                photo.data?.disabledPhotos.length > 0 &&
+                photo.data.disabledPhotos?.some((x) => x === avatar) ? (
+                  <img
+                    src={`https://localhost:7154/avatars/disabled/${avatar}.png`}
+                    alt="avatar"
+                    value={avatar}
+                    key={avatar}
+                    onClick={() => onSelectPhoto(avatar)}
+                  />
+                ) : (
+                  <img
+                    src={`https://localhost:7154/avatars/${avatar}.png`}
+                    alt="avatar"
+                    value={avatar}
+                    key={avatar}
+                    onClick={() => onSelectPhoto(avatar)}
+                  />
+                )
+              )}
             </div>
             {decodedToken.isVIP === "True" ? (
               <button

@@ -36,8 +36,6 @@ const NewRoom = () => {
             }
             if(player.payload === "PhotoUpdate")
             {
-              console.log(player);
-
               setRoom((prevState) => {
                 if(!prevState.players.some(x=> x.playerId == player.data.player.playerId)){
                   return {

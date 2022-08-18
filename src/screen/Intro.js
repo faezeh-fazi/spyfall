@@ -13,7 +13,7 @@ const Intro = () => {
   const [data, setData] = useState({
     spyCount: 0,
     startAsPlayer: false,
-    roundMinutes: "260",
+    roundSeconds: "260",
   });
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Intro = () => {
               size="md"
               onChange={(e) =>
                 setData((prevState) => {
-                  return { ...prevState, roundMinutes: e.target.value };
+                  return { ...prevState, roundSeconds: e.target.value };
                 })
               }
             >
